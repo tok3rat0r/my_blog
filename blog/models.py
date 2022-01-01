@@ -32,7 +32,7 @@ class Post(models.Model):
     title = models.CharField(max_length=100)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     excerpt = models.CharField(max_length=240)
-    image = models.ImageField()
+    image = models.ImageField(upload_to='images', null=True)
     date = models.DateField(auto_now_add=True)
     slug = models.SlugField(max_length=100, editable=False)
     content = models.TextField()
