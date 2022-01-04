@@ -44,3 +44,12 @@ class Post(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
         super().save(*args, **kwargs)
+
+
+class Comment(models.Model):
+    user_name = models.CharField(max_length=120)
+    user_email = models.EmailField()
+    text = models.TextField(max_length=420)
+    post = models.ForeignKey(Post,
+                             on_delete=models.CASCADE,
+                             related_name="comments")
