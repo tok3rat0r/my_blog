@@ -14,6 +14,8 @@ from pathlib import Path
 from os import getenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+import storages.backends.s3boto3
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -32,6 +34,7 @@ ALLOWED_HOSTS = [getenv('APP_HOST', "localhost")]
 
 INSTALLED_APPS = [
     'blog',
+    'storages',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -134,3 +137,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_ROOT = BASE_DIR / 'uploads'
 MEDIA_URL = '/files/'
+
+AWS_STORAGE_BUCKET_NAME = "my-new-blog-staticfiles"
+AWS_S3_REGION_NAME = "eu-west-3"
+AWS_ACCESS_KEY_ID = "AKIATVQKEO3BOJEISCFB"
+AWS_SECRET_ACCESS_KEY = getenv('AWS_SECRET_KEY')
+
+AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
+
+STATICFILES_PATH = "static"
+MEDIAFILES_PATH = "uploads"
+
+STATICFILES_STORAGE = "custom_storages.StaticFileStorage"
+DEFAULT_FILE_STORAGE = "custom_storages.MediaFileStorage"
